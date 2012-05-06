@@ -1,12 +1,20 @@
 require "rest_cache/version"
 
 module RestCache
-
+	
 	class Middleware
+
+		EXPIRATION_SECONDS_DEFAULT = 300
+		GLOBAL_CACHING_DEFAULT = true
 
 	  @@cache = {}
 	
-	  def initialize(app, options = { :expiration_seconds => 300, :global => true })
+	  def initialize(app, options)
+	  
+	  	# assign defaults to potentially missing options
+	    options[:expiration_seconds] ||= EXPIRATION_SECONDS_DEFAULT
+	    options[:global] ||= GLOBAL_CACHING_DEFAULT
+	  
 	    @app = app
 	    @options = options
 	  end

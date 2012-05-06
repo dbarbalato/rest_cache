@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["dbarbalato@gmail.com"]
   s.homepage    = ""
   s.summary     = %q{Request caching for Rack-based web applications.}
-  s.description = %q{RestCache is Rack middleware that relies on HTTP verbs to cache requests to your server application. Every GET request will be cached according to your initialization parameters (see example for more information), and conversely, every PUT/POST/DELETE request will clear your cache to ensure that updates are always reflected. RestCache is designed to be a lightweight, simple, yet effective tool to enhance the performance of your application. }
+  s.description = %q{RestCache is Rack middleware that relies on HTTP verbs to cache requests to your server application. Every GET request will be cached according to your initialization parameters (see README for more information), and conversely, every PUT/POST/DELETE request will clear your cache to ensure that updates are always reflected. RestCache is designed to be a lightweight, simple, yet effective tool to enhance the performance of your application. }
 
   s.rubyforge_project = "RestCache"
 

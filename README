@@ -1,0 +1,57 @@
+RestCache by Dave Barbalato
+---------------------------
+
+When To Use This Gem:
+
+	You have built a RESTful service in a Rack-based frameword, such as Rails, and you want to cache requests intelligently behind the scenes. This gem does just that - Using your parameters or some sane defaults, you can eliminate the retrieval of the same data across GET requests in your application. This caching can be performed globally, where processing power allocated to one individual can be used to the benefit of the group, or alternatively, on a per-session basis.
+
+
+The Cool Part:
+		
+	RestCache is powerful in that, through reliance on the conventions of RESTful verbs, any cached request will be ignored if a PUT/POST/DELETE has been seen before the expiration time. This ensures that cached data is thrown out when it has become stale.
+
+	
+Instructions (Rails 3.1+):
+
+	1.) Get the RestCache gem
+	
+		Install from the public repository using the following line:
+	
+			gem install rest_cache
+
+
+	2.) Install the Rack middleware
+		
+		In your application.rb file, add the following line*:
+	
+			config.middleware.use 'RestCache::Middleware'#, {:global => true, :expiration_seconds => 300}
+		
+		This tells your Rails application to insert RestCache into the Rack middleware stack. 
+		
+		*Note: supplying the hash is optional (hence why it is commented out above), and is set to "{:expiration_seconds => 300, :global => true}" by default in the gem.
+
+	
+	3.) Configure RestCache
+	
+		If you want your app to cache requests on a per-session basis, modify the option hash like so:
+		
+			{ :global => false, :expiration_seconds => 300 }
+			
+		Doing so will result in more personalized requests, but will yield higher memory usage, and thus fewer performance benefits, which is why it is not the default :)
+		
+		If you want your app to cache requests for longer than 300 seconds (5 minutes), modify the option hash like so:
+		
+			{ :global => true, :expiration_seconds => 86400 }
+			
+		Using this configuration, requests will be cached for a day, UNLESS the service endpoint is accessed with a PUT/POST/DELETE request.
+		
+		
+License:
+
+	Free to use for any entity without any warranty or guarantee - have at it! Give me credit if you wish, or better yet, a job with an awesome salary. Please forward constructive criticism to dbarbalato@gmail.com, and all complaints to /dev/null. 
+
+
+Comments:
+		
+Thanks for using the gem, I hope you find it useful! 
+
