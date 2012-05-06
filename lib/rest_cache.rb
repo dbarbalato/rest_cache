@@ -57,8 +57,10 @@ module RestCache
 
     	purge_expired
 
-	    # build a request
-    	key = '' << (@request.session[:session_id] unless @options[:global]) << @request.fullpath
+	    # build a key out of this request
+	    key = ''
+    	key << @request.session[:session_id].to_s unless @options[:global] 
+    	key << @request.fullpath
     
 	    # return the cached result, if present
 	    if @@cache.has_key? key
