@@ -13,7 +13,7 @@ module RestCache
 	  
 	  	# assign defaults to potentially missing options
 	    options[:expiration_seconds] ||= EXPIRATION_SECONDS_DEFAULT
-	    options[:global] ||= GLOBAL_CACHING_DEFAULT
+	    options[:global] &&= GLOBAL_CACHING_DEFAULT
 	  
 	    @app = app
 	    @options = options
@@ -58,8 +58,7 @@ module RestCache
     	purge_expired
 
 	    # build a request
-    	key = @request.fullpath
-	    key << @request.session[:session_id] unless @options[:global]
+    	key = '' << (@request.session[:session_id] unless @options[:global]) << @request.fullpath
     
 	    # return the cached result, if present
 	    if @@cache.has_key? key
@@ -74,7 +73,7 @@ module RestCache
 
 	  def purge_path(path)
 	    @@cache.each do |key, value|
-	      @@cache.delete(key) if key.gsub(/\.(.*)$/, '') == path
+	      @@cache.delete(key) if key.gsub(/\.(.*)$/, '').end_with? path
     	end
 	  end
 
